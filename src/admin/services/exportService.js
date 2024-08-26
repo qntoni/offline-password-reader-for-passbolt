@@ -2,8 +2,12 @@ import { getUserGpgKey, getUserSecrets, getAllUsernames } from '../repositories/
 import * as openpgp from 'openpgp';
 import fs from 'fs/promises';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
-const exportDir = path.join('../../exports');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const exportDir = path.resolve(__dirname, '../../../exports');
 
 export async function exportUserData(username) {
     try {

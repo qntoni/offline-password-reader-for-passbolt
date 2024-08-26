@@ -1,6 +1,6 @@
 import inquirer from 'inquirer';
-import { decryptUserFile } from './src/services/decryptionService.js';
-import { handleCli } from './src/controllers/passwordController.js';
+import { decryptUserFile } from './src/cli/services/decryptionService.js';
+import { handleCli } from './src/cli/controllers/passwordController.js';
 
 async function startCli() {
     const questions = [

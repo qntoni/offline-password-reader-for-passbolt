@@ -1,4 +1,4 @@
-import { getConnection } from '/src/config/database.js';
+import { getConnection } from '../../config/database.js';
 
 export async function getUserGpgKey(username) {
     const connection = await getConnection();
