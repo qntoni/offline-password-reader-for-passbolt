@@ -13,7 +13,7 @@ This is an offline password reader CLI to interact with Passbolt. It is aimed to
 ### Administrators
 - [Node.js](https//nodejs.org/en)
 - [Passbolt Server](https://help.passbolt.com/hosting/install)
-- Access to the MySQL database with READ/WRITE privileges
+- Access to the MySQL database with read and write privileges
 ### Users
 - [Node.js](https//nodejs.org/en)
 - Private key and the passphrase associated from the passbolt account
@@ -42,7 +42,7 @@ This is an offline password reader CLI to interact with Passbolt. It is aimed to
 ### Administrators
 - Run `node src/admin/main.js`
 - It should create an `./exports` folder
-  - Inside this folder, you should have all the encrypted JSON for each users with their data that has been encrypted using their GPG public key stored in the database
+  - Inside this folder, you should have all the encrypted JSON for each users with their data that has been encrypted using their GPG public key stored in the passbolt database
 
 ### Users
 - Run `node src/cli/main.js`
