@@ -1,0 +1,12 @@
+{
+  "name": "offline-passbolt",
+  "type": "module",
+  "version": "1.0.0",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "fs": "^0.0.1-security",
+    "inquirer": "^10.1.8",
+    "mysql2": "^3.11.0",
+    "openpgp": "^5.11.2"
+  }
+}
