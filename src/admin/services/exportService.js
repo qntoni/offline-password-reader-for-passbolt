@@ -1,13 +1,9 @@
-import { getUserGpgKey, getUserSecrets, getAllUsernames } from '../repositories/userRepository.js';
+import { getUserGpgKey, getUserSecretsInBatches, getAllUsernames } from '../repositories/userRepository.js';
 import * as openpgp from 'openpgp';
 import fs from 'fs/promises';
 import path from 'path';
-import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const exportDir = path.resolve(__dirname, '../../../exports');
+const exportDir = path.resolve(process.cwd(), 'exports');
 
 export async function exportUserData(username) {
     try {
@@ -18,12 +14,24 @@ export async function exportUserData(username) {
             return;
         }
 
-        const rows = await getUserSecrets(username);
+        const publicKey = await openpgp.readKey({ armoredKey });
 
-        if (rows.length > 0) {
-            const publicKey = await openpgp.readKey({ armoredKey });
+        let offset = 0;
+        const batchSize = 1000;
+        let allSecrets = [];
 
-            const jsonString = JSON.stringify(rows);
+        do {
+            const batch = await getUserSecretsInBatches(username, batchSize, offset);
+            if (batch.length > 0) {
+                allSecrets = [...allSecrets, ...batch];
+                offset += batchSize;
+            } else {
+                break;
+            }
+        } while (true);
+
+        if (allSecrets.length > 0) {
+            const jsonString = JSON.stringify(allSecrets);
             const encrypted = await openpgp.encrypt({
                 message: await openpgp.createMessage({ text: jsonString }),
                 encryptionKeys: publicKey,
@@ -46,10 +54,14 @@ export async function exportAllUsers() {
 
         console.log("Users retrieved from database:", usernames);
 
-        for (const username of usernames) {
-            console.log(`Processing user: ${username}`);
-            await exportUserData(username);
-        }
+        await Promise.all(
+            usernames.map(async (username) => {
+                console.log(`Processing user: ${username}`);
+                await exportUserData(username);
+            })
+        );
+
+        console.log('All users processed.');
     } catch (error) {
         console.error('Error exporting users:', error.message);
     }
