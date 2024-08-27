@@ -16,6 +16,7 @@ This is an offline password reader CLI to interact with Passbolt. It is aimed to
 - Access to the MySQL database with read and write privileges
 ### Users
 - [Node.js](https//nodejs.org/en)
+- [Docker](https://www.docker.com/products/docker-desktop/)
 - Private key and the passphrase associated from the passbolt account
 - Encrypted dump of the database related to the passbolt account 
 
@@ -35,7 +36,7 @@ This is an offline password reader CLI to interact with Passbolt. It is aimed to
 - Update `./env` with the correct database credentials
 
 ### Users
-- Preferably import the dump of the database that has been shared from the administrator and the passbolt private key to the root folder `./`
+- Preferably import the dump of the encrypted database that has been shared by the administrator and the passbolt private key to the data folder with `mkdir data` 
 
 ## Usage
 
@@ -46,18 +47,30 @@ This is an offline password reader CLI to interact with Passbolt. It is aimed to
 
 ### Users
 #### WARNING
-🚨⚠️  Since the CLI is running on the terminal, it will display sensitive data such as decrypted secrets and decrypted descriptions
+🚨⚠️  Since the CLI is running on the terminal, it will display sensitive data such as decrypted secrets and decrypted descriptions, **please use the dedicated docker image**
+
+If you still want to run it manually in your client terminal 🤠 
 1. Disable the shell history: `set +o history`
-2. After exiting the CLI
+2. Run the CLI: `node src/cli/main.js`
+3. After exiting the CLI
     - Clear the outputs: `clear`
     - Re-enable the history: `set -o history`
 
 #### CLI
-- Run `node src/cli/main.js`
+#### Prerequisites
+- Create a data folder: `mkdir data`
+  - Inside this folder, import:
+    - Your private key as `private.key`
+    - Your encrypted JSON as `encrypted.json.gpg`
+
+‼️ **Theses files are mounted in docker-compose.yml so if you are changing the destination, you'll have to update the docker-compose accordingly**
+
+##### Using the CLI
+- Run `docker-compose run --rm user-cli`
 - Enter the path where the private key is stored *(default: ./private.key)*
 - Enter the passphrase of your `private.key`
-- Enter the path of the encrypted JSON file that the administrator shared with you *(default: ./dump.json.gpg)*
+- Enter the path of the encrypted JSON file that the administrator shared with you *(default: ./encrypted.json.gpg)*
 - It should let you perform offline operations
   - Display all the passwords **(Resource name, username, URI, Password, Description)**
   - Search for a specific password which will match with either the resource name, username or URI
-  - Exit to quit the CLI
+  - Exit to quit the CLI and destroy the docker image
