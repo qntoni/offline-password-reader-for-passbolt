@@ -45,12 +45,14 @@ This is an offline password reader CLI to interact with Passbolt. It is aimed to
   - Inside this folder, you should have all the encrypted JSON for each users with their data that has been encrypted using their GPG public key stored in the passbolt database
 
 ### Users
+#### WARNING
 🚨⚠️  Since the CLI is running on the terminal, it will display sensitive data such as decrypted secrets and decrypted descriptions
 1. Disable the shell history: `set +o history`
 2. After exiting the CLI
     - Clear the outputs: `clear`
     - Re-enable the history: `set -o history`
 
+#### CLI
 - Run `node src/cli/main.js`
 - Enter the path where the private key is stored *(default: ./private.key)*
 - Enter the passphrase of your `private.key`
