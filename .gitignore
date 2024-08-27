@@ -1,5 +1,5 @@
 node_modules/
 exports/
 .env
-private.key
+*.key
 .idea
