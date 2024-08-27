@@ -1,3 +1,3 @@
-import { generateAllUserFiles, generateUserFile } from './controllers/exportController.js';
+import { generateAllUserFiles } from './controllers/exportController.js';
 
 generateAllUserFiles();
