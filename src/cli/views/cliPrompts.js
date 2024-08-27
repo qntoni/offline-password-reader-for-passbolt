@@ -1,5 +1,21 @@
 import inquirer from 'inquirer';
 
+export async function Warning() {
+    return inquirer.prompt([
+        {
+            type: 'confirm',
+            name: 'acknowledge',
+            message: `Warning: Sensitive information may be exposed during this session. 
+To ensure security:
+1. Disable your shell history by running: \`set +o history\`.
+2. After the session, remember to re-enable history by running: \`set -o history\`.
+
+Do you acknowledge and wish to proceed?`,
+            default: false
+        }
+    ]);
+}
+
 export async function getPrivateKeyAndPassphrase() {
     return inquirer.prompt([
         {
