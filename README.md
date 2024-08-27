@@ -48,8 +48,8 @@ This is an offline password reader CLI to interact with Passbolt. It is aimed to
 🚨⚠️  Since the CLI is running on the terminal, it will display sensitive data such as decrypted secrets and decrypted descriptions
 1. Disable the shell history: `set +o history`
 2. After exiting the CLI
-   3. Clear the outputs: `clear`
-   4. Re-enable the history: `set -o history`
+    - Clear the outputs: `clear`
+    - Re-enable the history: `set -o history`
 
 - Run `node src/cli/main.js`
 - Enter the path where the private key is stored *(default: ./private.key)*
