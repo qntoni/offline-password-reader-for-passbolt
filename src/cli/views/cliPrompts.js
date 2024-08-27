@@ -5,12 +5,8 @@ export async function Warning() {
         {
             type: 'confirm',
             name: 'acknowledge',
-            message: `Warning: Sensitive information may be exposed during this session. 
-To ensure security:
-1. Disable your shell history by running: \`set +o history\`.
-2. After the session, remember to re-enable history by running: \`set -o history\`.
-
-Do you acknowledge and wish to proceed?`,
+            message: `The CLI should be ran in a dedicated docker image with the --rm flag to ensure that it isn't persisted.
+Do you confirm that you've done that and wish to proceed?`,
             default: false
         }
     ]);
@@ -39,7 +35,7 @@ export async function getUserFileInput() {
             type: 'input',
             name: 'userFile',
             message: 'Provide the path to your encrypted JSON file:',
-            default: './user.json.gpg'
+            default: './encrypted.json.gpg'
         }
     ]);
 }

@@ -1,0 +1,16 @@
+services:
+  user-cli:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: user-cli-container
+    volumes:
+      - ./data/private.key:/app/private.key:ro
+      - ./data/encrypted.json.gpg:/app/encrypted.json.gpg:ro
+    environment:
+      - HISTFILE=/dev/null
+      - HISTSIZE=0
+    command: node src/cli/main.js
+    stdin_open: true
+    tty: true
+    working_dir: /app
